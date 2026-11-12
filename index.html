@@ -25,6 +25,8 @@
     --slip-ink: #2A3A9E;
     --focus: #3446B0;
     --measure: 36rem;
+    --mat: #232A5C;
+    --mat-edge: #171C44;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -35,6 +37,8 @@
       --carbon-hover: #BAC3FF;
       --rule: #2C3150;
       --focus: #BAC3FF;
+      --mat: #2B3370;
+      --mat-edge: #1C2250;
     }
   }
 
@@ -67,14 +71,14 @@
   /* Hero */
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
-    gap: clamp(2rem, 5vw, 5rem);
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
     align-items: center;
     padding: clamp(2rem, 7vw, 6rem) 0 clamp(3rem, 8vw, 7rem);
   }
-  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } .scene { height: min(520px, 110vw); } }
   h1 {
-    font-size: clamp(2.4rem, 5.4vw, 4.25rem);
+    font-size: clamp(2.25rem, 4.3vw, 3.5rem);
     line-height: 1.04;
     letter-spacing: -0.025em;
     font-weight: 700;
@@ -101,72 +105,127 @@
   .btn:hover { background: var(--carbon-hover); color: var(--paper); }
   .quiet-link { font-size: 1.0625rem; }
 
-  /* The carbon slip */
-  .slip-figure { margin: 0; }
-  .slip {
+  /* The desk: a 3D scene of shop paperwork */
+  .desk-figure { margin: 0; min-width: 0; }
+  .scene {
     position: relative;
-    background: var(--slip);
-    color: #2B2A1E;
-    border-radius: 3px;
-    padding: 1.25rem 1.5rem 1.5rem;
-    box-shadow: 0 1px 0 #D9CB7E, 0 18px 40px -22px rgba(28, 33, 64, .45);
-    transform: rotate(-1.2deg);
-    max-width: 30rem;
+    height: clamp(340px, 46vw, 560px);
+    perspective: 1400px;
+    touch-action: pan-y;
+    cursor: grab;
+    user-select: none; -webkit-user-select: none;
+    --rx: 52deg; --rz: -28deg; --ds: 1;
   }
-  .slip::before { /* perforated tear edge */
-    content: "";
-    position: absolute; left: 0; right: 0; top: -6px; height: 12px;
-    background: radial-gradient(circle at 6px 6px, var(--paper) 3.5px, transparent 4px) 0 0 / 14px 12px repeat-x;
-  }
-  .slip-head {
-    display: flex; justify-content: space-between; align-items: baseline;
-    border-bottom: 1.5px solid var(--slip-line);
-    padding-bottom: .5rem; margin-bottom: .75rem;
-    font-size: .875rem; color: #6B6440;
-  }
-  .slip-head b { font-weight: 700; color: #4A4529; font-size: 1rem; }
-  .hand {
-    font-family: "Kalam", "Segoe Print", cursive;
-    color: var(--slip-ink);
-    font-size: 1.3rem;
-    line-height: 1.55;
-    margin: 0;
-    min-height: 4.65em;
-    background: repeating-linear-gradient(to bottom, transparent 0 calc(1.55em - 1px), var(--slip-line) calc(1.55em - 1px) 1.55em);
-  }
-  .hand span { display: block; clip-path: inset(0 100% 0 0); }
-  .hand.play span { animation: write .9s steps(26, end) forwards; }
-  .hand.play span:nth-child(2) { animation-delay: .95s; }
-  .hand.play span:nth-child(3) { animation-delay: 1.9s; }
-  @keyframes write { to { clip-path: inset(0 0 0 0); } }
-
-  .record {
-    margin-top: 1.25rem;
-    background: #FFFFFF;
+  .scene.dragging { cursor: grabbing; }
+  .desk {
+    position: absolute; left: 50%; top: 50%;
+    width: 640px; height: 460px; margin: -230px 0 0 -320px;
+    transform: scale(var(--ds)) rotateX(var(--rx)) rotateZ(var(--rz));
+    transform-style: preserve-3d;
     border-radius: 6px;
-    padding: .9rem 1rem;
-    color: #1C2140;
-    font-size: .95rem;
-    opacity: 0;
-    transform: translateY(6px);
+    background:
+      linear-gradient(to right, rgba(255,255,255,.07) 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(to bottom, rgba(255,255,255,.07) 1px, transparent 1px) 0 0 / 40px 40px,
+      var(--mat);
   }
-  .record.show { opacity: 1; transform: none; transition: opacity .45s ease, transform .45s ease; }
-  .record dl { display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; margin: 0; }
-  .record dt { color: #565C76; }
-  .record dd { margin: 0; font-weight: 500; }
-  .record .status { margin: .7rem 0 0; padding-top: .6rem; border-top: 1px solid #E4E6EE; color: #1D7A4E; font-weight: 500; font-size: .875rem; }
+  .edge { position: absolute; background: var(--mat-edge); }
+  .edge-front { left: 0; top: 100%; width: 100%; height: 16px; transform-origin: top; transform: rotateX(-90deg); }
+  .edge-left { left: -16px; top: 0; width: 16px; height: 100%; transform-origin: right; transform: rotateY(-90deg); filter: brightness(.8); }
+  .edge-right { left: 100%; top: 0; width: 16px; height: 100%; transform-origin: left; transform: rotateY(90deg); filter: brightness(.8); }
 
-  .slip-caption {
-    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
-    max-width: 30rem; margin-top: 1.25rem;
-    font-size: .9375rem; color: var(--muted);
+  .item { position: absolute; transform-style: preserve-3d; }
+  .item .shadow {
+    position: absolute; inset: 0;
+    background: rgba(6, 8, 28, .45);
+    filter: blur(7px);
+    transform: translateZ(1px) rotateZ(var(--r)) translate(5px, 7px);
+    transition: opacity .6s ease, transform .6s ease;
   }
-  .replay {
-    font: inherit; font-size: .9375rem; color: var(--carbon);
+  .item.open .shadow { opacity: .25; transform: translateZ(1px) rotateZ(var(--r)) scale(1.12); }
+  .paper {
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transform: translateZ(var(--z)) rotateZ(var(--r));
+    transition: transform .8s cubic-bezier(.2, .8, .2, 1);
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .paper:hover, .paper:focus-visible { transform: translateZ(calc(var(--z) + 16px)) rotateZ(var(--r)); }
+  .paper:focus-visible { outline: 3px solid #FFD84A; outline-offset: 4px; }
+  .item.open .paper {
+    transform:
+      translate3d(var(--tx), var(--ty), 0)
+      rotateZ(calc(var(--rz) * -1)) rotateX(calc(var(--rx) * -1))
+      translateZ(340px) rotateY(180deg) scale(var(--os, 1.4));
+  }
+  .face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: 3px; overflow: hidden;
+    color: #2B2A1E; text-align: left;
+  }
+  .hand { font-family: "Kalam", "Segoe Print", cursive; color: var(--slip-ink); }
+
+  /* paper fronts */
+  .f-slip { background: var(--slip); padding: 14px 16px; }
+  .f-slip .head, .f-bill .head { display: flex; justify-content: space-between; font-size: 11px; color: #6B6440; border-bottom: 1.5px solid var(--slip-line); padding-bottom: 5px; margin-bottom: 8px; }
+  .f-slip .head b, .f-bill .head b { font-size: 13px; color: #4A4529; }
+  .f-slip .hand { font-size: 19px; line-height: 30px; background: repeating-linear-gradient(to bottom, transparent 0 29px, var(--slip-line) 29px 30px); min-height: 150px; }
+  .f-ledger { background: #FBFBF4; padding: 16px 14px 14px 34px; }
+  .f-ledger::before { content: ""; position: absolute; left: 26px; top: 0; bottom: 0; width: 1px; background: #E39A9A; }
+  .f-ledger .title { font-size: 17px; margin-bottom: 6px; }
+  .f-ledger table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  .f-ledger td { border-bottom: 1px solid #BFD0EE; padding: 4px 2px 0; line-height: 24px; }
+  .f-ledger td:last-child { text-align: right; }
+  .f-ledger s { color: #7C86C8; }
+  .f-bill { background: #F7DADF; padding: 12px 14px; }
+  .f-bill .head { border-color: #DDB1B9; color: #7A4C55; }
+  .f-bill .head b { color: #5C2F39; }
+  .f-bill table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .f-bill td { border-bottom: 1px solid #DDB1B9; padding: 3px 0 0; line-height: 23px; }
+  .f-bill td:last-child { text-align: right; }
+  .f-bill .total td { border-bottom: 0; font-size: 18px; padding-top: 8px; }
+  .f-note { background: #CFE0F7; padding: 18px 14px; font-size: 21px; line-height: 1.3; box-shadow: inset 0 18px 14px -14px rgba(28,33,64,.18); }
+
+  /* screen backs */
+  .back {
+    transform: rotateY(180deg);
+    background: #FFFFFF; color: #1C2140;
+    border-radius: 10px;
+    font-size: 11.5px; line-height: 1.4;
+    display: flex; flex-direction: column;
+    box-shadow: inset 0 0 0 1px #D5D9E4;
+  }
+  .back .bar { background: #3446B0; color: #fff; font-weight: 700; font-size: 12px; padding: 8px 12px; }
+  .back .body { padding: 10px 12px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .back dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; margin: 0; }
+  .back dt { color: #565C76; }
+  .back dd { margin: 0; font-weight: 500; }
+  .back .big { font-size: 22px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+  .back .who { font-weight: 700; font-size: 13px; }
+  .back .muted { color: #565C76; }
+  .back .ok { margin-top: auto; padding-top: 7px; border-top: 1px solid #E4E6EE; color: #1D7A4E; font-weight: 500; }
+  .back .warn { margin-top: auto; padding-top: 7px; border-top: 1px solid #E4E6EE; color: #A1440B; font-weight: 500; }
+  .stock-row { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; }
+  .stock-row i { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: #E4E6EE; overflow: hidden; display: block; }
+  .stock-row i::after { content: ""; display: block; height: 100%; width: var(--w); background: #3446B0; border-radius: 3px; }
+  .stock-row.low i::after { background: #D9641A; }
+  .stock-row b { font-weight: 500; }
+
+  .desk-caption {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    margin-top: .75rem; min-height: 4.5em;
+    font-size: 1rem; color: var(--muted);
+  }
+  .desk-caption strong { color: var(--ink); font-weight: 700; }
+  .desk-caption p { max-width: 34rem; }
+  .putback {
+    font: inherit; color: var(--carbon);
     background: none; border: 0; padding: 0; cursor: pointer;
     text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: 1px;
     white-space: nowrap;
   }
+  .putback[hidden] { display: none; }
 
   /* Sections */
   section { padding: clamp(3rem, 7vw, 5.5rem) 0; border-top: 1px solid var(--rule); }
@@ -219,11 +278,8 @@
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
   @media (prefers-reduced-motion: reduce) {
-    .hand span { clip-path: none; }
-    .hand.play span { animation: none; }
-    .record { opacity: 1; transform: none; }
-    .record.show { transition: none; }
-    .replay { display: none; }
+    .paper, .item .shadow { transition: none; }
+    .scene { cursor: default; }
   }
 </style>
 </head>
@@ -249,27 +305,107 @@
         </div>
       </div>
 
-      <figure class="slip-figure" aria-labelledby="slip-cap">
-        <div class="slip">
-          <div class="slip-head"><b>Order</b><span>No. 0417</span></div>
-          <p class="hand" id="hand" aria-label="Handwritten order: Rahul Traders, 12 cartons tea powder, deliver Friday morning.">
-            <span aria-hidden="true">Rahul Traders –</span>
-            <span aria-hidden="true">12 cartons tea powder</span>
-            <span aria-hidden="true">deliver Fri morning pls</span>
-          </p>
-          <div class="record" id="record">
-            <dl>
-              <dt>Customer</dt><dd>Rahul Traders</dd>
-              <dt>Item</dt><dd>Tea powder</dd>
-              <dt>Quantity</dt><dd>12 cartons</dd>
-              <dt>Delivery</dt><dd>Friday, morning</dd>
-            </dl>
-            <p class="status">Added to orders and stock updated</p>
+      <figure class="desk-figure" aria-labelledby="desk-cap">
+        <div class="scene" id="scene">
+          <div class="desk" id="desk">
+            <div class="edge edge-front"></div><div class="edge edge-left"></div><div class="edge edge-right"></div>
+
+            <div class="item" data-key="stock" style="left:40px;top:40px;width:230px;height:290px;--r:-4deg;--z:2px">
+              <div class="shadow"></div>
+              <div class="paper" role="button" tabindex="0" aria-pressed="false" aria-label="Handwritten stock register. Turn it over to see the stock screen.">
+                <div class="face f-ledger hand" aria-hidden="true">
+                  <div class="title">Stock – Nov</div>
+                  <table>
+                    <tr><td>Tea powder</td><td><s>40</s> 28</td></tr>
+                    <tr><td>Sugar 25kg</td><td><s>15</s> 12</td></tr>
+                    <tr><td>Rice 10kg</td><td><s>9</s> 3 !!</td></tr>
+                    <tr><td>Oil 1L</td><td>64</td></tr>
+                    <tr><td>Salt</td><td>30?</td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                  </table>
+                </div>
+                <div class="face back" aria-hidden="true">
+                  <div class="bar">Stock</div>
+                  <div class="body">
+                    <div class="stock-row"><span>Tea powder</span><b>28</b><i style="--w:70%"></i></div>
+                    <div class="stock-row"><span>Sugar 25 kg</span><b>12</b><i style="--w:48%"></i></div>
+                    <div class="stock-row low"><span>Rice 10 kg</span><b>3</b><i style="--w:12%"></i></div>
+                    <div class="stock-row"><span>Oil 1 L</span><b>64</b><i style="--w:90%"></i></div>
+                    <div class="stock-row"><span>Salt</span><b>30</b><i style="--w:60%"></i></div>
+                    <div class="warn">Rice is running low. Reorder by Thursday.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="item" data-key="orders" style="left:300px;top:30px;width:200px;height:240px;--r:6deg;--z:4px">
+              <div class="shadow"></div>
+              <div class="paper" role="button" tabindex="0" aria-pressed="false" aria-label="Handwritten order slip. Turn it over to see the order screen.">
+                <div class="face f-slip" aria-hidden="true">
+                  <div class="head"><b>Order</b><span>No. 0417</span></div>
+                  <div class="hand">Rahul Traders –<br>12 cartons tea powder<br>deliver Fri morning pls</div>
+                </div>
+                <div class="face back" aria-hidden="true">
+                  <div class="bar">New order</div>
+                  <div class="body">
+                    <dl>
+                      <dt>Customer</dt><dd>Rahul Traders</dd>
+                      <dt>Item</dt><dd>Tea powder</dd>
+                      <dt>Quantity</dt><dd>12 cartons</dd>
+                      <dt>Delivery</dt><dd>Friday, morning</dd>
+                    </dl>
+                    <div class="ok">Added to orders. Stock updated.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="item" data-key="billing" style="left:440px;top:195px;width:170px;height:240px;--r:-8deg;--z:6px">
+              <div class="shadow"></div>
+              <div class="paper" role="button" tabindex="0" aria-pressed="false" aria-label="Handwritten cash bill. Turn it over to see the invoice screen.">
+                <div class="face f-bill" aria-hidden="true">
+                  <div class="head"><b>Cash bill</b><span>0417</span></div>
+                  <table class="hand">
+                    <tr><td>Tea pdr x12</td><td>8,640</td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr class="total"><td>Total</td><td>8,640/-</td></tr>
+                  </table>
+                </div>
+                <div class="face back" aria-hidden="true">
+                  <div class="bar">Invoice 0417</div>
+                  <div class="body">
+                    <div class="who">Rahul Traders</div>
+                    <div class="big">₹8,640</div>
+                    <div class="muted">12 cartons tea powder</div>
+                    <div class="muted">Sent to the customer's phone</div>
+                    <div class="ok">Paid on Friday</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="item" data-key="followups" style="left:245px;top:285px;width:150px;height:150px;--r:10deg;--z:8px">
+              <div class="shadow"></div>
+              <div class="paper" role="button" tabindex="0" aria-pressed="false" aria-label="Sticky note about a pending payment. Turn it over to see the reminder screen.">
+                <div class="face f-note hand" aria-hidden="true">Call Suresh abt pending payment!!</div>
+                <div class="face back" aria-hidden="true">
+                  <div class="bar">Reminder</div>
+                  <div class="body">
+                    <div class="who">Suresh Stores</div>
+                    <div class="muted">₹14,200 due since 3 Nov</div>
+                    <div class="ok">Sent today. Next one on Monday.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <figcaption class="slip-caption">
-          <span id="slip-cap">An example of the kind of tool I build: a scribbled order, read and logged without anyone retyping it.</span>
-          <button class="replay" id="replay" type="button">Play again</button>
+        <figcaption class="desk-caption">
+          <p id="desk-cap" role="status" aria-live="polite"></p>
+          <button class="putback" id="putback" type="button" hidden>Put it back</button>
         </figcaption>
       </figure>
     </div>
@@ -322,21 +458,108 @@
 
 <script>
 (function () {
-  var hand = document.getElementById('hand');
-  var record = document.getElementById('record');
-  var replay = document.getElementById('replay');
+  var scene = document.getElementById('scene');
+  var cap = document.getElementById('desk-cap');
+  var putback = document.getElementById('putback');
+  var items = Array.prototype.slice.call(scene.querySelectorAll('.item'));
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var timer;
+  var coarse = window.matchMedia('(pointer: coarse)').matches;
 
-  function play() {
-    clearTimeout(timer);
-    hand.classList.remove('play');
-    record.classList.remove('show');
-    void hand.offsetWidth; // restart animation
-    hand.classList.add('play');
-    timer = setTimeout(function () { record.classList.add('show'); }, 3100);
+  var HINT = coarse
+    ? 'These are examples of the paperwork I replace. Tap a paper to turn it over, or swipe sideways to turn the desk.'
+    : 'These are examples of the paperwork I replace. Pick up a paper to turn it over, or drag the desk to look around.';
+  var COPY = {
+    orders: ['Orders.', 'A scribbled or messaged order is read and logged, so nobody retypes it.'],
+    stock: ['Stock.', 'The register becomes a live count that warns you before something runs out.'],
+    billing: ['Billing.', 'The bill is made from the order and sent straight to the customer’s phone.'],
+    followups: ['Follow-ups.', 'Payment reminders go out on their own, so nobody has to chase.']
+  };
+
+  var BASE = { rx: 52, rz: -28 };
+  var cur = { rx: BASE.rx, rz: BASE.rz }, target = { rx: BASE.rx, rz: BASE.rz };
+  var drag = { rx: 0, rz: 0 }, hover = { rx: 0, rz: 0 };
+  var open = null, ds = 1, raf = 0;
+
+  function setCaption(key) {
+    cap.textContent = '';
+    if (!key) { cap.textContent = HINT; return; }
+    var b = document.createElement('strong'); b.textContent = COPY[key][0];
+    cap.appendChild(b); cap.appendChild(document.createTextNode(' ' + COPY[key][1]));
   }
-  if (!reduce) { play(); replay.addEventListener('click', play); }
+
+  function layout() {
+    var w = scene.clientWidth, h = scene.clientHeight;
+    ds = Math.min(1, w / 800);
+    scene.style.setProperty('--ds', ds);
+    var tw = Math.min(340, w * 0.82), th = h * 0.84;
+    items.forEach(function (it) {
+      var iw = it.offsetWidth, ih = it.offsetHeight;
+      it.style.setProperty('--tx', (320 - (it.offsetLeft + iw / 2)) + 'px');
+      it.style.setProperty('--ty', (230 - (it.offsetTop + ih / 2)) + 'px');
+      var persp = 1400 / (1400 - 340 * ds);
+      it.style.setProperty('--os', Math.min(tw / iw, th / ih) / ds / persp);
+    });
+  }
+
+  function tick() {
+    raf = 0;
+    cur.rx += (target.rx - cur.rx) * 0.12;
+    cur.rz += (target.rz - cur.rz) * 0.12;
+    scene.style.setProperty('--rx', cur.rx.toFixed(2) + 'deg');
+    scene.style.setProperty('--rz', cur.rz.toFixed(2) + 'deg');
+    if (Math.abs(target.rx - cur.rx) + Math.abs(target.rz - cur.rz) > 0.02) raf = requestAnimationFrame(tick);
+  }
+  function aim() {
+    target.rx = Math.max(34, Math.min(66, BASE.rx + drag.rx + hover.rx));
+    target.rz = Math.max(-75, Math.min(20, BASE.rz + drag.rz + hover.rz));
+    if (reduce) { cur.rx = target.rx; cur.rz = target.rz; }
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+
+  function toggle(it) {
+    var was = open;
+    if (open) { open.classList.remove('open'); open.querySelector('.paper').setAttribute('aria-pressed', 'false'); open = null; }
+    if (it && it !== was) { it.classList.add('open'); it.querySelector('.paper').setAttribute('aria-pressed', 'true'); open = it; }
+    putback.hidden = !open;
+    setCaption(open ? open.getAttribute('data-key') : null);
+  }
+
+  // drag to orbit, move to tilt
+  var down = null, dragged = false;
+  scene.addEventListener('pointerdown', function (e) {
+    if (e.button) return;
+    down = { x: e.clientX, y: e.clientY, rx: drag.rx, rz: drag.rz }; dragged = false;
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (down) {
+      var dx = e.clientX - down.x, dy = e.clientY - down.y;
+      if (!dragged && Math.abs(dx) + Math.abs(dy) > 6) { dragged = true; scene.classList.add('dragging'); }
+      if (dragged && !open) { drag.rz = down.rz - dx * 0.25; drag.rx = down.rx - dy * 0.15; aim(); }
+    } else if (!open && !reduce && e.pointerType === 'mouse') {
+      var r = scene.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) { hover.rx = hover.rz = 0; }
+      else { hover.rz = ((e.clientX - r.left) / r.width - 0.5) * -12; hover.rx = ((e.clientY - r.top) / r.height - 0.5) * -8; }
+      aim();
+    }
+  });
+  function release() { down = null; scene.classList.remove('dragging'); }
+  window.addEventListener('pointerup', release);
+  window.addEventListener('pointercancel', release);
+
+  scene.addEventListener('click', function (e) {
+    if (dragged) { dragged = false; return; }
+    var paper = e.target.closest ? e.target.closest('.paper') : null;
+    toggle(paper ? paper.parentNode : null);
+  });
+  scene.addEventListener('keydown', function (e) {
+    var paper = e.target.closest ? e.target.closest('.paper') : null;
+    if (paper && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(paper.parentNode); }
+    if (e.key === 'Escape' && open) { var p = open.querySelector('.paper'); toggle(null); p.focus(); }
+  });
+  putback.addEventListener('click', function () { var p = open && open.querySelector('.paper'); toggle(null); if (p) p.focus(); });
+
+  window.addEventListener('resize', layout);
+  layout(); setCaption(null); aim();
 
   var copy = document.getElementById('copy');
   var status = document.getElementById('copy-status');
