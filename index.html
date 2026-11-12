@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shakkeer Thottathil · Software consultant</title>
+<meta name="description" content="Shakkeer Thottathil builds apps and AI-driven tools that take repetitive work off small and mid-sized businesses.">
+<meta property="og:title" content="Shakkeer Thottathil, software consultant and developer">
+<meta property="og:description" content="Apps and AI tools that take the busywork off small businesses.">
+<meta name="theme-color" content="#F6F7F9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%233446B0'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-size='15' font-weight='700' fill='%23F7EDB4' text-anchor='middle'%3EST%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6F7F9;
+    --ink: #1C2140;
+    --muted: #565C76;
+    --carbon: #3446B0;
+    --carbon-hover: #26358C;
+    --rule: #D5D9E4;
+    --slip: #F7EDB4;
+    --slip-line: #E3D58C;
+    --slip-ink: #2A3A9E;
+    --focus: #3446B0;
+    --focus-on-dark: #FFD84A;
+    --success: #1D7A4E;
+    --warning: #A1440B;
+    --warning-fill: #D9641A;
+    /* app screens in the desk scene stay light in both themes */
+    --screen: #FFFFFF;
+    --screen-ink: #1C2140;
+    --screen-muted: #565C76;
+    --screen-primary: #3446B0;
+    --screen-border: #D5D9E4;
+    --screen-rule: #E4E6EE;
+
+    --font-sans: "Schibsted Grotesk", system-ui, sans-serif;
+    --font-hand: "Kalam", "Segoe Print", cursive;
+    --text-xs: .9375rem;
+    --text-sm: 1rem;
+    --text-base: 1.125rem;
+    --text-lg: 1.25rem;
+    --text-h2: clamp(1.6rem, 3vw, 2.125rem);
+    --text-h1: clamp(2.25rem, 4.3vw, 3.5rem);
+    --text-display: clamp(1.75rem, 6.2vw, 4.5rem);
+
+    --space-3: .75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --section: clamp(3rem, 7vw, 5.5rem);
+    --content: 72rem;
+    --measure: 36rem;
+
+    --radius-sm: 4px;
+    --radius-paper: 3px;
+    --radius-screen: 10px;
+    --radius-pill: 999px;
+    --mat: #232A5C;
+    --mat-edge: #171C44;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #12152A;
+      --ink: #E6E8F2;
+      --muted: #A3A8C2;
+      --carbon: #9AA8FF;
+      --carbon-hover: #BAC3FF;
+      --rule: #2C3150;
+      --focus: #BAC3FF;
+      --mat: #2B3370;
+      --mat-edge: #1C2250;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.55;
+    font-kerning: normal;
+  }
+  a { color: var(--carbon); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+  a:hover { color: var(--carbon-hover); }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+  .wrap { max-width: var(--content); margin: 0 auto; padding: 0 var(--space-6); }
+  @media (max-width: 480px) { .wrap { padding: 0 var(--space-4); } }
+
+  /* Header */
+  .site-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-6) 0; }
+  .site-head .name { font-weight: 700; font-size: var(--text-sm); color: var(--ink); text-decoration: none; }
+  .site-head nav { display: flex; gap: var(--space-6); font-size: var(--text-sm); }
+  .site-head nav a { color: var(--ink); text-decoration: none; }
+  .site-head nav a:hover { color: var(--carbon); text-decoration: underline; }
+  @media (max-width: 560px) { .site-head nav .opt { display: none; } }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: center;
+    padding: clamp(2rem, 7vw, 6rem) 0 clamp(3rem, 8vw, 7rem);
+  }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } .scene { height: min(520px, 110vw); } }
+  h1 {
+    font-size: var(--text-h1);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    margin: 0 0 var(--space-6);
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+  .lede { font-size: var(--text-lg); color: var(--muted); max-width: var(--measure); margin: 0 0 var(--space-8); }
+  .lede strong { color: var(--ink); font-weight: 500; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); align-items: center; }
+  .btn {
+    display: inline-block;
+    background: var(--carbon);
+    color: var(--paper);
+    font: inherit;
+    font-weight: 500;
+    font-size: var(--text-sm);
+    padding: .8rem 1.4rem;
+    border: 0;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--carbon-hover); color: var(--paper); }
+  .quiet-link { font-size: var(--text-sm); }
+
+  /* The desk: a 3D scene of shop paperwork */
+  .desk-figure { margin: 0; min-width: 0; }
+  .scene {
+    position: relative;
+    height: clamp(340px, 46vw, 560px);
+    perspective: 1400px;
+    touch-action: pan-y;
+    cursor: grab;
+    user-select: none; -webkit-user-select: none;
+    --rx: 52deg; --rz: -28deg; --ds: 1;
+  }
+  .scene.dragging { cursor: grabbing; }
+  .desk {
+    position: absolute; left: 50%; top: 50%;
+    width: 640px; height: 460px; margin: -230px 0 0 -320px;
+    transform: scale(var(--ds)) rotateX(var(--rx)) rotateZ(var(--rz));
+    transform-style: preserve-3d;
+    border-radius: var(--radius-sm);
+    background:
+      linear-gradient(to right, rgba(255,255,255,.07) 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(to bottom, rgba(255,255,255,.07) 1px, transparent 1px) 0 0 / 40px 40px,
+      var(--mat);
+  }
+  .edge { position: absolute; background: var(--mat-edge); }
+  .edge-front { left: 0; top: 100%; width: 100%; height: 16px; transform-origin: top; transform: rotateX(-90deg); }
+  .edge-left { left: -16px; top: 0; width: 16px; height: 100%; transform-origin: right; transform: rotateY(-90deg); filter: brightness(.8); }
+  .edge-right { left: 100%; top: 0; width: 16px; height: 100%; transform-origin: left; transform: rotateY(90deg); filter: brightness(.8); }
+
+  .item { position: absolute; transform-style: preserve-3d; }
+  .item .shadow {
+    position: absolute; inset: 0;
+    background: rgba(6, 8, 28, .45);
+    filter: blur(7px);
+    transform: translateZ(1px) rotateZ(var(--r)) translate(5px, 7px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .item.open .shadow { opacity: .25; transform: translateZ(1px) rotateZ(var(--r)) scale(1.12); }
+  .paper {
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transform: translateZ(var(--z)) rotateZ(var(--r));
+    transition: transform .8s cubic-bezier(.2, .8, .2, 1);
+    cursor: pointer;
+    border-radius: var(--radius-paper);
+  }
+  .paper:hover, .paper:focus-visible { transform: translateZ(calc(var(--z) + 16px)) rotateZ(var(--r)); }
+  .paper:focus-visible { outline: 3px solid var(--focus-on-dark); outline-offset: 4px; }
+  .item.open .paper {
+    transform:
+      translate3d(var(--tx), var(--ty), 0)
+      rotateZ(calc(var(--rz) * -1)) rotateX(calc(var(--rx) * -1))
+      translateZ(340px) rotateY(180deg) scale(var(--os, 1.4));
+  }
+  .face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: var(--radius-paper); overflow: hidden;
+    color: #2B2A1E; text-align: left;
+  }
+  .hand { font-family: var(--font-hand); color: var(--slip-ink); }
+
+  /* paper fronts */
+  .f-slip { background: var(--slip); padding: 14px 16px; }
+  .f-slip .head, .f-bill .head { display: flex; justify-content: space-between; font-size: 11px; color: #6B6440; border-bottom: 1.5px solid var(--slip-line); padding-bottom: 5px; margin-bottom: 8px; }
+  .f-slip .head b, .f-bill .head b { font-size: 13px; color: #4A4529; }
+  .f-slip .hand { font-size: 19px; line-height: 30px; background: repeating-linear-gradient(to bottom, transparent 0 29px, var(--slip-line) 29px 30px); min-height: 150px; }
+  .f-ledger { background: #FBFBF4; padding: 16px 14px 14px 34px; }
+  .f-ledger::before { content: ""; position: absolute; left: 26px; top: 0; bottom: 0; width: 1px; background: #E39A9A; }
+  .f-ledger .title { font-size: 17px; margin-bottom: 6px; }
+  .f-ledger table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  .f-ledger td { border-bottom: 1px solid #BFD0EE; padding: 4px 2px 0; line-height: 24px; }
+  .f-ledger td:last-child { text-align: right; }
+  .f-ledger s { color: #7C86C8; }
+  .f-bill { background: #F7DADF; padding: 12px 14px; }
+  .f-bill .head { border-color: #DDB1B9; color: #7A4C55; }
+  .f-bill .head b { color: #5C2F39; }
+  .f-bill table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .f-bill td { border-bottom: 1px solid #DDB1B9; padding: 3px 0 0; line-height: 23px; }
+  .f-bill td:last-child { text-align: right; }
+  .f-bill .total td { border-bottom: 0; font-size: 18px; padding-top: 8px; }
+  .f-note { background: #CFE0F7; padding: 18px 14px; font-size: 21px; line-height: 1.3; box-shadow: inset 0 18px 14px -14px rgba(28,33,64,.18); }
+
+  /* screen backs */
+  .back {
+    transform: rotateY(180deg);
+    background: var(--screen); color: var(--screen-ink);
+    border-radius: var(--radius-screen);
+    font-size: 11.5px; line-height: 1.4;
+    display: flex; flex-direction: column;
+    box-shadow: inset 0 0 0 1px var(--screen-border);
+  }
+  .back .bar { background: var(--screen-primary); color: var(--screen); font-weight: 700; font-size: 12px; padding: 8px 12px; }
+  .back .body { padding: 10px 12px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .back dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; margin: 0; }
+  .back dt { color: var(--screen-muted); }
+  .back dd { margin: 0; font-weight: 500; }
+  .back .big { font-size: 22px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+  .back .who { font-weight: 700; font-size: 13px; }
+  .back .muted { color: var(--screen-muted); }
+  .back .ok { margin-top: auto; padding-top: 7px; border-top: 1px solid var(--screen-rule); color: var(--success); font-weight: 500; }
+  .back .warn { margin-top: auto; padding-top: 7px; border-top: 1px solid var(--screen-rule); color: var(--warning); font-weight: 500; }
+  .stock-row { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; }
+  .stock-row i { grid-column: 1 / -1; height: 6px; border-radius: var(--radius-paper); background: var(--screen-rule); overflow: hidden; display: block; }
+  .stock-row i::after { content: ""; display: block; height: 100%; width: var(--w); background: var(--screen-primary); border-radius: var(--radius-paper); }
+  .stock-row.low i::after { background: var(--warning-fill); }
+  .stock-row b { font-weight: 500; }
+
+  .desk-caption {
+    display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4);
+    margin-top: var(--space-3); min-height: 4.5em;
+    font-size: var(--text-sm); color: var(--muted);
+  }
+  .desk-caption strong { color: var(--ink); font-weight: 700; }
+  .desk-caption p { max-width: 34rem; }
+  .putback {
+    font: inherit; color: var(--carbon);
+    background: none; border: 0; padding: 0; cursor: pointer;
+    text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: 1px;
+    white-space: nowrap;
+  }
+  .putback[hidden] { display: none; }
+
+  /* Sections */
+  section { padding: var(--section) 0; border-top: 1px solid var(--rule); }
+  h2 {
+    font-size: var(--text-h2);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    font-weight: 700;
+    margin: 0 0 var(--space-10);
+    max-width: 22ch;
+  }
+  h3 { font-size: var(--text-lg); line-height: 1.3; margin: 0 0 .5rem; font-weight: 700; }
+  p { margin: 0; }
+
+  .services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-10); }
+  .services p { color: var(--muted); max-width: 30ch; }
+  @media (max-width: 760px) { .services { grid-template-columns: 1fr; gap: var(--space-8); } .services p { max-width: var(--measure); } }
+
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: step; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-8); }
+  .steps li { counter-increment: step; border-top: 2px solid var(--ink); padding-top: var(--space-4); }
+  .steps li::before { content: counter(step); display: block; font-weight: 700; font-size: var(--text-sm); color: var(--carbon); margin-bottom: .5rem; }
+  .steps p { color: var(--muted); font-size: var(--text-sm); }
+  @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+  /* Contact */
+  .contact h2 { margin-bottom: var(--space-4); }
+  .contact .lede { margin-bottom: var(--space-8); }
+  .email-big {
+    display: inline-block;
+    font-size: var(--text-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--ink);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    border-bottom: 3px solid var(--carbon);
+    padding-bottom: .1em;
+  }
+  .email-big:hover { color: var(--carbon); }
+  .contact .actions { margin-top: var(--space-8); }
+  .copy-btn { background: none; color: var(--carbon); box-shadow: inset 0 0 0 1.5px var(--carbon); }
+  .copy-btn:hover { background: none; color: var(--carbon-hover); box-shadow: inset 0 0 0 1.5px var(--carbon-hover); }
+  .elsewhere { list-style: none; padding: 0; margin: var(--space-12) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-8); font-size: var(--text-sm); }
+  .elsewhere span { color: var(--muted); margin-right: .4rem; }
+
+  footer { border-top: 1px solid var(--rule); padding: var(--space-8) 0 var(--space-10); font-size: var(--text-xs); color: var(--muted); }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .paper, .item .shadow { transition: none; }
+    .scene { cursor: default; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="name" href="#top">Shakkeer Thottathil</a>
+    <nav aria-label="Main">
+      <a class="opt" href="#services">Services</a>
+      <a class="opt" href="#process">How I work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div>
+        <h1>Apps and AI tools that take the busywork off small businesses.</h1>
+        <p class="lede">I'm <strong>Shakkeer Thottathil</strong>, a software consultant and developer. I help small and mid-sized businesses replace slow, manual work with software that fits the way they already run.</p>
+        <div class="actions">
+          <a class="btn" href="mailto:shakkeert@live.in?subject=Project%20enquiry">Email me about your project</a>
+          <a class="quiet-link" href="https://github.com/shakkeert">See my code on GitHub</a>
+        </div>
+      </div>
+
+      <figure class="desk-figure" aria-labelledby="desk-cap">
+        <div class="scene" id="scene">
+          <div class="desk" id="desk">
+            <div class="edge edge-front"></div><div class="edge edge-left"></div><div class="edge edge-right"></div>
+
+            <div class="item" data-key="stock" style="left:40px;top:40px;width:230px;height:290px;--r:-4deg;--z:2px">
+              <div class="shadow"></div>
+              <div class="paper" role="button" tabindex="0" aria-pressed="false" aria-label="Handwritten stock register. Turn it over to see the stock screen.">
+                <div class="face f-ledger hand" aria-hidden="true">
+                  <div class="title">Stock – Nov</div>
+                  <table>
+                    <tr><td>Tea powder</td><td><s>40</s> 28</td></tr>
+                    <tr><td>Sugar 25kg</td><td><s>15</s> 12</td></tr>
+                    <tr><td>Rice 10kg</td><td><s>9</s> 3 !!</td></tr>
+                    <tr><td>Oil 1L</td><td>64</td></tr>
+                    <tr><td>Salt</td><td>30?</td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                  </table>
+                </div>
+                <div class="face back" aria-hidden="true">
+                  <div class="bar">Stock</div>
+                  <div class="body">
+                    <div class="stock-row"><span>Tea powder</span><b>28</b><i style="--w:70%"></i></div>
+                    <div class="stock-row"><span>Sugar 25 kg</span><b>12</b><i style="--w:48%"></i></div>
+                    <div class="stock-row low"><span>Rice 10 kg</span><b>3</b><i style="--w:12%"></i></div>
+                    <div class="stock-row"><span>Oil 1 L</span><b>64</b><i style="--w:90%"></i></div>
+                    <div class="stock-row"><span>Salt</span><b>30</b><i style="--w:60%"></i></div>
+                    <div class="warn">Rice is running low. Reorder by Thursday.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="item" data-key="orders" style="left:300px;top:30px;width:200px;height:240px;--r:6deg;--z:4px">
+              <div class="shadow"></div>
+              <div class="paper" role="button" tabindex="0" aria-pressed="false" aria-label="Handwritten order slip. Turn it over to see the order screen.">
+                <div class="face f-slip" aria-hidden="true">
+                  <div class="head"><b>Order</b><span>No. 0417</span></div>
+                  <div class="hand">Rahul Traders –<br>12 cartons tea powder<br>deliver Fri morning pls</div>
+                </div>
+                <div class="face back" aria-hidden="true">
+                  <div class="bar">New order</div>
+                  <div class="body">
+                    <dl>
+                      <dt>Customer</dt><dd>Rahul Traders</dd>
+                      <dt>Item</dt><dd>Tea powder</dd>
+                      <dt>Quantity</dt><dd>12 cartons</dd>
+                      <dt>Delivery</dt><dd>Friday, morning</dd>
+                    </dl>
+                    <div class="ok">Added to orders. Stock updated.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="item" data-key="billing" style="left:440px;top:195px;width:170px;height:240px;--r:-8deg;--z:6px">
+              <div class="shadow"></div>
+              <div class="paper" role="button" tabindex="0" aria-pressed="false" aria-label="Handwritten cash bill. Turn it over to see the invoice screen.">
+                <div class="face f-bill" aria-hidden="true">
+                  <div class="head"><b>Cash bill</b><span>0417</span></div>
+                  <table class="hand">
+                    <tr><td>Tea pdr x12</td><td>8,640</td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr><td>&nbsp;</td><td></td></tr>
+                    <tr class="total"><td>Total</td><td>8,640/-</td></tr>
+                  </table>
+                </div>
+                <div class="face back" aria-hidden="true">
+                  <div class="bar">Invoice 0417</div>
+                  <div class="body">
+                    <div class="who">Rahul Traders</div>
+                    <div class="big">₹8,640</div>
+                    <div class="muted">12 cartons tea powder</div>
+                    <div class="muted">Sent to the customer's phone</div>
+                    <div class="ok">Paid on Friday</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="item" data-key="followups" style="left:245px;top:285px;width:150px;height:150px;--r:10deg;--z:8px">
+              <div class="shadow"></div>
+              <div class="paper" role="button" tabindex="0" aria-pressed="false" aria-label="Sticky note about a pending payment. Turn it over to see the reminder screen.">
+                <div class="face f-note hand" aria-hidden="true">Call Suresh abt pending payment!!</div>
+                <div class="face back" aria-hidden="true">
+                  <div class="bar">Reminder</div>
+                  <div class="body">
+                    <div class="who">Suresh Stores</div>
+                    <div class="muted">₹14,200 due since 3 Nov</div>
+                    <div class="ok">Sent today. Next one on Monday.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption class="desk-caption">
+          <p id="desk-cap" role="status" aria-live="polite"></p>
+          <button class="putback" id="putback" type="button" hidden>Put it back</button>
+        </figcaption>
+      </figure>
+    </div>
+
+    <section id="services" aria-labelledby="services-h">
+      <h2 id="services-h">What I can do for your business</h2>
+      <div class="services">
+        <div>
+          <h3>Consulting</h3>
+          <p>We look at where your team loses time and decide what is worth building, and what isn't.</p>
+        </div>
+        <div>
+          <h3>Custom apps</h3>
+          <p>Web and mobile apps for orders, stock, staff and customers, built around how your business works.</p>
+        </div>
+        <div>
+          <h3>AI-driven tools</h3>
+          <p>Automation that reads messages, documents and data, so routine work gets done without manual entry.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" aria-labelledby="process-h">
+      <h2 id="process-h">How a project goes</h2>
+      <ol class="steps">
+        <li><h3>Talk it through</h3><p>You tell me what's slowing you down. I ask questions until I understand the real problem.</p></li>
+        <li><h3>Try a small version</h3><p>I build a working first piece quickly, so you can test it on real work before committing.</p></li>
+        <li><h3>Build and launch</h3><p>We grow it into the full tool and roll it out to your team.</p></li>
+        <li><h3>Keep it running</h3><p>I stay on hand for fixes, changes and the next idea.</p></li>
+      </ol>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-h">
+      <h2 id="contact-h">Tell me what's slowing your business down</h2>
+      <p class="lede">Send a short note about your business and the problem. I'll reply with whether I can help and what a first step would look like.</p>
+      <a class="email-big" href="mailto:shakkeert@live.in?subject=Project%20enquiry">shakkeert@live.in</a>
+      <div class="actions">
+        <button class="btn copy-btn" id="copy" type="button" data-email="shakkeert@live.in">Copy email address</button>
+        <span class="sr-only" id="copy-status" role="status" aria-live="polite"></span>
+      </div>
+      <ul class="elsewhere">
+        <li><span>GitHub</span><a href="https://github.com/shakkeert">@shakkeert</a></li>
+        <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/shakkeert">in/shakkeert</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>Shakkeer Thottathil, software consultant and developer.</footer>
+</div>
+
+<script>
+(function () {
+  var scene = document.getElementById('scene');
+  var cap = document.getElementById('desk-cap');
+  var putback = document.getElementById('putback');
+  var items = Array.prototype.slice.call(scene.querySelectorAll('.item'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarse = window.matchMedia('(pointer: coarse)').matches;
+
+  var HINT = coarse
+    ? 'These are examples of the paperwork I replace. Tap a paper to turn it over, or swipe sideways to turn the desk.'
+    : 'These are examples of the paperwork I replace. Pick up a paper to turn it over, or drag the desk to look around.';
+  var COPY = {
+    orders: ['Orders.', 'A scribbled or messaged order is read and logged, so nobody retypes it.'],
+    stock: ['Stock.', 'The register becomes a live count that warns you before something runs out.'],
+    billing: ['Billing.', 'The bill is made from the order and sent straight to the customer’s phone.'],
+    followups: ['Follow-ups.', 'Payment reminders go out on their own, so nobody has to chase.']
+  };
+
+  var BASE = { rx: 52, rz: -28 };
+  var cur = { rx: BASE.rx, rz: BASE.rz }, target = { rx: BASE.rx, rz: BASE.rz };
+  var drag = { rx: 0, rz: 0 }, hover = { rx: 0, rz: 0 };
+  var open = null, ds = 1, raf = 0;
+
+  function setCaption(key) {
+    cap.textContent = '';
+    if (!key) { cap.textContent = HINT; return; }
+    var b = document.createElement('strong'); b.textContent = COPY[key][0];
+    cap.appendChild(b); cap.appendChild(document.createTextNode(' ' + COPY[key][1]));
+  }
+
+  function layout() {
+    var w = scene.clientWidth, h = scene.clientHeight;
+    ds = Math.min(1, w / 800);
+    scene.style.setProperty('--ds', ds);
+    var tw = Math.min(340, w * 0.82), th = h * 0.84;
+    items.forEach(function (it) {
+      var iw = it.offsetWidth, ih = it.offsetHeight;
+      it.style.setProperty('--tx', (320 - (it.offsetLeft + iw / 2)) + 'px');
+      it.style.setProperty('--ty', (230 - (it.offsetTop + ih / 2)) + 'px');
+      var persp = 1400 / (1400 - 340 * ds);
+      it.style.setProperty('--os', Math.min(tw / iw, th / ih) / ds / persp);
+    });
+  }
+
+  function tick() {
+    raf = 0;
+    cur.rx += (target.rx - cur.rx) * 0.12;
+    cur.rz += (target.rz - cur.rz) * 0.12;
+    scene.style.setProperty('--rx', cur.rx.toFixed(2) + 'deg');
+    scene.style.setProperty('--rz', cur.rz.toFixed(2) + 'deg');
+    if (Math.abs(target.rx - cur.rx) + Math.abs(target.rz - cur.rz) > 0.02) raf = requestAnimationFrame(tick);
+  }
+  function aim() {
+    target.rx = Math.max(34, Math.min(66, BASE.rx + drag.rx + hover.rx));
+    target.rz = Math.max(-75, Math.min(20, BASE.rz + drag.rz + hover.rz));
+    if (reduce) { cur.rx = target.rx; cur.rz = target.rz; }
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+
+  function toggle(it) {
+    var was = open;
+    if (open) { open.classList.remove('open'); open.querySelector('.paper').setAttribute('aria-pressed', 'false'); open = null; }
+    if (it && it !== was) { it.classList.add('open'); it.querySelector('.paper').setAttribute('aria-pressed', 'true'); open = it; }
+    putback.hidden = !open;
+    setCaption(open ? open.getAttribute('data-key') : null);
+  }
+
+  // drag to orbit, move to tilt
+  var down = null, dragged = false;
+  scene.addEventListener('pointerdown', function (e) {
+    if (e.button) return;
+    down = { x: e.clientX, y: e.clientY, rx: drag.rx, rz: drag.rz }; dragged = false;
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (down) {
+      var dx = e.clientX - down.x, dy = e.clientY - down.y;
+      if (!dragged && Math.abs(dx) + Math.abs(dy) > 6) { dragged = true; scene.classList.add('dragging'); }
+      if (dragged && !open) { drag.rz = down.rz - dx * 0.25; drag.rx = down.rx - dy * 0.15; aim(); }
+    } else if (!open && !reduce && e.pointerType === 'mouse') {
+      var r = scene.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) { hover.rx = hover.rz = 0; }
+      else { hover.rz = ((e.clientX - r.left) / r.width - 0.5) * -12; hover.rx = ((e.clientY - r.top) / r.height - 0.5) * -8; }
+      aim();
+    }
+  });
+  function release() { down = null; scene.classList.remove('dragging'); }
+  window.addEventListener('pointerup', release);
+  window.addEventListener('pointercancel', release);
+
+  scene.addEventListener('click', function (e) {
+    if (dragged) { dragged = false; return; }
+    var paper = e.target.closest ? e.target.closest('.paper') : null;
+    toggle(paper ? paper.parentNode : null);
+  });
+  scene.addEventListener('keydown', function (e) {
+    var paper = e.target.closest ? e.target.closest('.paper') : null;
+    if (paper && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(paper.parentNode); }
+    if (e.key === 'Escape' && open) { var p = open.querySelector('.paper'); toggle(null); p.focus(); }
+  });
+  putback.addEventListener('click', function () { var p = open && open.querySelector('.paper'); toggle(null); if (p) p.focus(); });
+
+  window.addEventListener('resize', layout);
+  layout(); setCaption(null); aim();
+
+  var copy = document.getElementById('copy');
+  var status = document.getElementById('copy-status');
+  copy.addEventListener('click', function () {
+    var email = copy.getAttribute('data-email');
+    var done = function () {
+      copy.textContent = 'Email address copied';
+      status.textContent = 'Email address copied';
+      setTimeout(function () { copy.textContent = 'Copy email address'; status.textContent = ''; }, 2500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(done, function () { window.location.href = 'mailto:' + email; });
+    } else {
+      window.location.href = 'mailto:' + email;
+    }
+  });
+})();
+</script>
+</body>
+</html>
